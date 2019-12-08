@@ -15,6 +15,8 @@
      */
     class Statistics extends Widget_Base
     {
+        use \Essential_Addons_Elementor\Traits\Helper;
+
         /* @var $db PDO */
         private static $db;
         private static $dbConnected = false;
@@ -125,14 +127,14 @@
             $this->start_controls_section(
                 'section_form_info_box',
                 [
-                    'label' => __('Fluent Form', 'essential-addons-elementor'),
+                    'label' => __('Formulaire', 'essential-addons-elementor'),
                 ]
             );
 
             $this->add_control(
                 'form_list',
                 [
-                    'label' => esc_html__('Fluent Form', 'essential-addons-elementor'),
+                    'label' => esc_html__('Formulaire', 'essential-addons-elementor'),
                     'type' => Controls_Manager::SELECT,
                     'label_block' => true,
                     'options' => $this->eael_select_fluent_forms(),
@@ -189,43 +191,56 @@
             }
         }
 
-        protected function getFormFields($form_id) {
-            $form = self::$db->query(
-                "SELECT 'form_fields' AS fields 
-                FROM `wp_fluentform_forms` 
-                WHERE 'id'= ". self::$db->quote($form_id).";"
+        protected function getFieldsData($form_id) {
+            $query = self::$db->prepare(
+                "SELECT form_fields AS fields FROM `wp_fluentform_forms` 
+                WHERE id = :form_id;"
             );
+            $query->bindParam(':form_id', $form_id, PDO::PARAM_STR);
+            $query->execute();
+            $form = $query->fetchColumn();
+            $fields_data = json_decode((is_array($form) ? array_shift($form) : $form), true);
+            return $fields_data['fields'] ?? null;
         }
 
-        protected function getStats() {
-            $regions = self::$db->query(
-                "SELECT COUNT(umeta_id) AS count, meta_key, meta_value FROM `wp_usermeta` 
-                WHERE 1 GROUP BY meta_key, meta_value"
+        protected function getEntriesData($form_id) {
+            $query = self::$db->prepare(
+                "SELECT COUNT(submission_id) AS submissions, field_name AS name, field_value AS value 
+                FROM `wp_fluentform_entry_details` WHERE form_id = :form_id 
+                GROUP BY name, value;"
             );
+            $query->bindParam(':form_id', $form_id, PDO::PARAM_STR);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
 
-            $stats = [
-                'region' => [],
-                'connu' => [],
-                'annee' => [],
-            ];
+        public function isSubfield($field_key, $field_data = [], $survey_model = [], $end_string_marker = 'o', $c_class = 'subfield') {
+            return (!empty($field_data) ? $field_data['settings']['container_class'] == $c_class : false)
+                || (!empty($survey_model) ? !array_key_exists($field_key, $survey_model) : false)
+            || (substr($field_key, -1) === $end_string_marker);
+        }
 
-            while ($line = $regions->fetchObject()) {
-                $key = false;
-                if ($line->meta_key == 'user_registration_userform_region') {
-                    $key = 'region';
-                }
-                if ($line->meta_key == 'user_registration_userform_connu_asso') {
-                    $key = 'connu';
-                }
-                if ($line->meta_key == 'user_registration_userform_annee_arrivee') {
-                    $key = 'annee';
-                }
-                if ($key) {
-                    $stats[$key][] = $line;
-                }
+        protected function getSurveyQuestions($raw_fields) {
+            $survey = array();
+            foreach ($raw_fields as $field => $data) {
+                $data_name = $data['attributes']['name'];
+                $is_subfield = $this->isSubfield($data_name, $data);
+                $question_num = $is_subfield ? $raw_fields[$field - 1]['attributes']['name'] : $data_name;
+                if(!$is_subfield) $survey[$question_num]['label'] = $data['settings']['label'];
             }
+            return $survey;
+        }
 
-            return $stats;
+        protected function getSurveyData($form_id) {
+            $entries = $this->getEntriesData($form_id);
+            $survey_fields = $this->getSurveyQuestions($this->getFieldsData($form_id));
+            foreach ($entries as $entry => $data) {
+                $isSubfield = $this->isSubfield($data['name'], [], $survey_fields);
+                $question = $data['name'];
+                if($isSubfield) $question = rtrim($data['name'], 'o');
+                $survey_fields[$question]['results'][$data['value']] = $data['submissions'];
+            }
+            return $survey_fields;
         }
 
         /**
@@ -240,22 +255,26 @@
         protected function render() {
             if( ! defined('FLUENTFORM') ) return;
             $settings = $this->get_settings_for_display();
+            $form_id = $settings['form_list'];
+            if(!$form_id) {
+                return;
+            }
             self::connect();
-            $stats = $this->getStats();
+            $questions = $this->getSurveyData($form_id);
             ?>
-            <div>
-                <?php foreach ($stats as $key => $data): ?>
-                    <p><?= $key ?></p>
+            <div id="survey-results">
+                <?php foreach ($questions as $num => $data): ?>
+                    <h4><?= $data['label'] ?></h4>
                     <table>
                         <thead>
-                        <th>Valeur</th>
-                        <th>Nombre</th>
+                        <th>Réponses</th>
+                        <th>Nombre d'entées</th>
                         </thead>
                         <tbody>
-                        <?php foreach ($data as $line) { ?>
+                        <?php foreach ($data['results'] as $value => $entries) { ?>
                             <tr>
-                                <td><?= $line->meta_value; ?></td>
-                                <td><?= $line->count; ?></td>
+                                <td><?= $value; ?></td>
+                                <td><?= $entries; ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>
