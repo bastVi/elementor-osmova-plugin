@@ -1,5 +1,4 @@
 <?php
-
     namespace ElementorOsmovaPlugin\Widgets;
 
     use Elementor\Widget_Base;
@@ -16,8 +15,9 @@
      */
     class Statistics extends Widget_Base
     {
-        private static $ddb;
-        private static $ddbConnected = false;
+        /* @var $db PDO */
+        private static $db;
+        private static $dbConnected = false;
 
         /**
          * Retrieve the widget name.
@@ -101,18 +101,42 @@
          * @access protected
          */
         protected function _register_controls() {
+            if (!defined('FLUENTFORM')) {
+                $this->start_controls_section(
+                    'eael_global_warning',
+                    [
+                        'label' => __('Warning!', 'essential-addons-elementor'),
+                    ]
+                );
+
+                $this->add_control(
+                    'eael_global_warning_text',
+                    [
+                        'type' => Controls_Manager::RAW_HTML,
+                        'raw' => __('<strong>Fluent Form</strong> is not installed/activated on your site. Please install and activate <a href="plugin-install.php?s=fluentform&tab=search&type=term" target="_blank">Fluent Form</a> first.', 'essential-addons-elementor'),
+                        'content_classes' => 'eael-warning',
+                    ]
+                );
+
+                $this->end_controls_section();
+                return;
+            }
+
             $this->start_controls_section(
-                'section_content',
+                'section_form_info_box',
                 [
-                    'label' => __('Content', 'elementor-statistics'),
+                    'label' => __('Fluent Form', 'essential-addons-elementor'),
                 ]
             );
 
             $this->add_control(
-                'title',
+                'form_list',
                 [
-                    'label' => __('Title', 'elementor-statistics'),
-                    'type' => Controls_Manager::TEXT,
+                    'label' => esc_html__('Fluent Form', 'essential-addons-elementor'),
+                    'type' => Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'options' => $this->eael_select_fluent_forms(),
+                    'default' => '0',
                 ]
             );
 
@@ -150,29 +174,31 @@
         private static function connect() {
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
             try {
-                # Read settings from INI file, set UTF8
-                self::$ddb = new PDO(
+                self::$db = new PDO(
                     $dsn,
                     DB_USER,
                     DB_PASSWORD,
                     array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
                 );
-                # We can now log any exceptions on Fatal error.
-                self::$ddb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                # Disable emulation of prepared statements, use REAL prepared statements instead.
-                self::$ddb->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-                # Connection succeeded, set the boolean to true.
-                self::$ddbConnected = true;
+                self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                self::$dbConnected = true;
             } catch (PDOException $e) {
-                # Write into log
                 file_put_contents('../logs/bdd.log', $e->getMessage());
                 die();
             }
         }
 
+        protected function getFormFields($form_id) {
+            $form = self::$db->query(
+                "SELECT 'form_fields' AS fields 
+                FROM `wp_fluentform_forms` 
+                WHERE 'id'= ". self::$db->quote($form_id).";"
+            );
+        }
+
         protected function getStats() {
-            self::connect();
-            $regions = self::$ddb->query(
+            $regions = self::$db->query(
                 "SELECT COUNT(umeta_id) AS count, meta_key, meta_value FROM `wp_usermeta` 
                 WHERE 1 GROUP BY meta_key, meta_value"
             );
@@ -212,7 +238,9 @@
          * @access protected
          */
         protected function render() {
+            if( ! defined('FLUENTFORM') ) return;
             $settings = $this->get_settings_for_display();
+            self::connect();
             $stats = $this->getStats();
             ?>
             <div>
