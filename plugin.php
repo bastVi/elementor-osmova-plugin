@@ -47,8 +47,6 @@ class Plugin {
 	 */
 	public function widget_scripts() {
 		wp_register_script( 'elementor-osmova-plugin', plugins_url( '/assets/js/statistics.js', __FILE__ ), [ 'jquery' ], false, true );
-		wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/fluentform/index.min.css', __FILE__ ));
-		wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/statistics.min.css', __FILE__ ));
         if( defined('FLUENTFORM') ) {
             wp_enqueue_style(
                 'fluent-form-styles',
@@ -64,6 +62,19 @@ class Plugin {
                 FLUENTFORM_VERSION
             );
         }
+	}
+
+	/**
+	 * widget_styles
+	 *
+	 * Load required plugin core files.
+	 *
+	 * @since 1.2.1
+	 * @access public
+	 */
+	public function widget_styles() {
+        wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/fluentform/index.min.css', __FILE__ ));
+        wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/statistics.min.css', __FILE__ ));
 	}
 
 	/**
@@ -107,6 +118,9 @@ class Plugin {
 	 * @access public
 	 */
 	public function __construct() {
+
+        // Register Widget Styles
+        add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
 
 		// Register widget scripts
 		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );

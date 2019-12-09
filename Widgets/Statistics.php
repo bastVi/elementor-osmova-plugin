@@ -21,6 +21,7 @@
         /* @var $db PDO */
         private static $db;
         private static $dbConnected = false;
+        protected static $table_prefix = 'wp_';
 
         /**
          * Retrieve the widget name.
@@ -175,6 +176,8 @@
         }
 
         private static function connect() {
+            global $wpdb;
+            self::$table_prefix = $wpdb->prefix;
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
             try {
                 self::$db = new PDO(
@@ -194,7 +197,7 @@
 
         protected function getFieldsData($form_id) {
             $query = self::$db->prepare(
-                "SELECT form_fields AS fields FROM `wp_fluentform_forms` 
+                "SELECT form_fields AS fields FROM `".self::$table_prefix."fluentform_forms`
                 WHERE id = :form_id;"
             );
             $query->bindParam(':form_id', $form_id, PDO::PARAM_STR);
@@ -207,7 +210,7 @@
         protected function getEntriesData($form_id) {
             $query = self::$db->prepare(
                 "SELECT COUNT(submission_id) AS submissions, field_name AS name, field_value AS value 
-                FROM `wp_fluentform_entry_details` WHERE form_id = :form_id 
+                FROM `". self::$table_prefix ."fluentform_entry_details` WHERE form_id = :form_id 
                 GROUP BY name, value;"
             );
             $query->bindParam(':form_id', $form_id, PDO::PARAM_STR);
@@ -264,6 +267,7 @@
             $questions = $this->getSurveyData($form_id);
             ?>
             <div id="survey-results">
+                <?php if(isset($questions[1]) && isset($questions[1]['results'])):?>
                 <?php foreach ($questions as $num => $data): ?>
                     <h4><?= $data['label'] ?></h4>
                     <table>
@@ -272,15 +276,20 @@
                         <th>Nombre d'entées</th>
                         </thead>
                         <tbody>
-                        <?php foreach ($data['results'] as $value => $entries) { ?>
+                        <?php if(isset($data['results'])): foreach ($data['results'] as $value => $entries): ?>
                             <tr>
                                 <td><?= $value; ?></td>
                                 <td><?= $entries; ?></td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; endif; ?>
                         </tbody>
                     </table>
                 <?php endforeach; ?>
+                <?php else: ?>
+                    <div  class="no-data-message alert alert-warning">
+                        <p class="text-center">Aucune donnée à afficher, aucun formulaire n'a encore été soumis</p>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php
         }

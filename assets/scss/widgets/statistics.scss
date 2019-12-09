@@ -1,0 +1,9 @@
+@import "../_config";
+
+.no-data-message {
+  text-align: center;
+  background-color: map_get($colors, warning);
+  border: 1px solid darken(map_get($colors, warning), 10);
+  border-radius: 4px;
+  padding: 15px;
+}
