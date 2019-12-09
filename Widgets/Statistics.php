@@ -3,6 +3,7 @@
 
     use Elementor\Widget_Base;
     use Elementor\Controls_Manager;
+    use ElementorOsmovaPlugin\Traits\Helper;
     use \PDO;
     use \PDOException;
 
@@ -15,7 +16,7 @@
      */
     class Statistics extends Widget_Base
     {
-        use \Essential_Addons_Elementor\Traits\Helper;
+        use Helper;
 
         /* @var $db PDO */
         private static $db;
@@ -105,18 +106,18 @@
         protected function _register_controls() {
             if (!defined('FLUENTFORM')) {
                 $this->start_controls_section(
-                    'eael_global_warning',
+                    'eo_global_warning',
                     [
                         'label' => __('Warning!', 'essential-addons-elementor'),
                     ]
                 );
 
                 $this->add_control(
-                    'eael_global_warning_text',
+                    'eo_global_warning_text',
                     [
                         'type' => Controls_Manager::RAW_HTML,
                         'raw' => __('<strong>Fluent Form</strong> is not installed/activated on your site. Please install and activate <a href="plugin-install.php?s=fluentform&tab=search&type=term" target="_blank">Fluent Form</a> first.', 'essential-addons-elementor'),
-                        'content_classes' => 'eael-warning',
+                        'content_classes' => 'eo-warning',
                     ]
                 );
 
@@ -137,7 +138,7 @@
                     'label' => esc_html__('Formulaire', 'essential-addons-elementor'),
                     'type' => Controls_Manager::SELECT,
                     'label_block' => true,
-                    'options' => $this->eael_select_fluent_forms(),
+                    'options' => $this->eo_select_fluent_forms(),
                     'default' => '0',
                 ]
             );

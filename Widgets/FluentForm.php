@@ -1,5 +1,5 @@
 <?php
-namespace Essential_Addons_Elementor\Elements;
+namespace ElementorOsmovaPlugin\Widgets;
 
 // If this file is called directly, abort.
 if (!defined('ABSPATH')) {
@@ -12,25 +12,26 @@ use \Elementor\Group_Control_Box_Shadow as Group_Control_Box_Shadow;
 use \Elementor\Group_Control_Typography as Group_Control_Typography;
 use \Elementor\Scheme_Typography as Scheme_Typography;
 use \Elementor\Widget_Base as Widget_Base;
+use ElementorOsmovaPlugin\Traits\Helper;
 
 class FluentForm extends Widget_Base
 {
 
-    use \Essential_Addons_Elementor\Traits\Helper;
+    use Helper;
 
     public function get_name()
     {
-        return 'eael-fluentform';
+        return 'elementor-osmova-fluentform';
     }
 
     public function get_title()
     {
-        return __('EA Fluent Form', 'essential-addons-elementor');
+        return __('Fluent Form', 'elementor-osmova-plugin');
     }
 
     public function get_categories()
     {
-        return ['essential-addons-elementor'];
+        return ['elementor-osmova-plugin'];
     }
 
     public function get_icon()
@@ -45,18 +46,18 @@ class FluentForm extends Widget_Base
         /*-----------------------------------------------------------------------------------*/
         if (!defined('FLUENTFORM')) {
             $this->start_controls_section(
-                'eael_global_warning',
+                'eo_global_warning',
                 [
-                    'label' => __('Warning!', 'essential-addons-elementor'),
+                    'label' => __('Warning!', 'elementor-osmova-plugin'),
                 ]
             );
 
             $this->add_control(
-                'eael_global_warning_text',
+                'eo_global_warning_text',
                 [
                     'type' => Controls_Manager::RAW_HTML,
-                    'raw' => __('<strong>Fluent Form</strong> is not installed/activated on your site. Please install and activate <a href="plugin-install.php?s=fluentform&tab=search&type=term" target="_blank">Fluent Form</a> first.', 'essential-addons-elementor'),
-                    'content_classes' => 'eael-warning',
+                    'raw' => __('<strong>Fluent Form</strong> is not installed/activated on your site. Please install and activate <a href="plugin-install.php?s=fluentform&tab=search&type=term" target="_blank">Fluent Form</a> first.', 'elementor-osmova-plugin'),
+                    'content_classes' => 'eo-warning',
                 ]
             );
 
@@ -69,7 +70,7 @@ class FluentForm extends Widget_Base
             $this->start_controls_section(
                 'section_form_info_box',
                 [
-                    'label' => __('Fluent Form', 'essential-addons-elementor'),
+                    'label' => __('Fluent Form', 'elementor-osmova-plugin'),
                 ]
             );
 
@@ -78,10 +79,10 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'form_list',
                 [
-                    'label' => esc_html__('Fluent Form', 'essential-addons-elementor'),
+                    'label' => esc_html__('Fluent Form', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::SELECT,
                     'label_block' => true,
-                    'options' => $this->eael_select_fluent_forms(),
+                    'options' => $this->eo_select_fluent_forms(),
                     'default' => '0',
                 ]
             );
@@ -89,10 +90,10 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'custom_title_description',
                 [
-                    'label' => __('Custom Title & Description', 'essential-addons-elementor'),
+                    'label' => __('Custom Title & Description', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::SWITCHER,
-                    'label_on' => __('Yes', 'essential-addons-elementor'),
-                    'label_off' => __('No', 'essential-addons-elementor'),
+                    'label_on' => __('Yes', 'elementor-osmova-plugin'),
+                    'label_off' => __('No', 'elementor-osmova-plugin'),
                     'return_value' => 'yes',
                 ]
             );
@@ -100,7 +101,7 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'form_title_custom',
                 [
-                    'label' => esc_html__('Title', 'essential-addons-elementor'),
+                    'label' => esc_html__('Title', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::TEXT,
                     'label_block' => true,
                     'default' => '',
@@ -113,7 +114,7 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'form_description_custom',
                 [
-                    'label' => esc_html__('Description', 'essential-addons-elementor'),
+                    'label' => esc_html__('Description', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::TEXTAREA,
                     'default' => '',
                     'condition' => [
@@ -125,11 +126,11 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'labels_switch',
                 [
-                    'label' => __('Labels', 'essential-addons-elementor'),
+                    'label' => __('Labels', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::SWITCHER,
                     'default' => 'yes',
-                    'label_on' => __('Show', 'essential-addons-elementor'),
-                    'label_off' => __('Hide', 'essential-addons-elementor'),
+                    'label_on' => __('Show', 'elementor-osmova-plugin'),
+                    'label_off' => __('Hide', 'elementor-osmova-plugin'),
                     'return_value' => 'yes'
                 ]
             );
@@ -137,11 +138,11 @@ class FluentForm extends Widget_Base
             $this->add_control(
                 'placeholder_switch',
                 [
-                    'label' => __('Placeholder', 'essential-addons-elementor'),
+                    'label' => __('Placeholder', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::SWITCHER,
                     'default' => 'yes',
-                    'label_on' => __('Show', 'essential-addons-elementor'),
-                    'label_off' => __('Hide', 'essential-addons-elementor'),
+                    'label_on' => __('Show', 'elementor-osmova-plugin'),
+                    'label_off' => __('Hide', 'elementor-osmova-plugin'),
                     'return_value' => 'yes',
                 ]
             );
@@ -155,19 +156,19 @@ class FluentForm extends Widget_Base
             $this->start_controls_section(
                 'section_errors',
                 [
-                    'label' => __('Errors', 'essential-addons-elementor'),
+                    'label' => __('Errors', 'elementor-osmova-plugin'),
                 ]
             );
 
             $this->add_control(
                 'error_messages',
                 [
-                    'label' => __('Error Messages', 'essential-addons-elementor'),
+                    'label' => __('Error Messages', 'elementor-osmova-plugin'),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'show',
                     'options' => [
-                        'show' => __('Show', 'essential-addons-elementor'),
-                        'hide' => __('Hide', 'essential-addons-elementor'),
+                        'show' => __('Show', 'elementor-osmova-plugin'),
+                        'hide' => __('Hide', 'elementor-osmova-plugin'),
                     ]
                 ]
             );
@@ -186,7 +187,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_form_title_style',
             [
-                'label' => __('Title & Description', 'essential-addons-elementor'),
+                'label' => __('Title & Description', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -197,26 +198,26 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'heading_alignment',
             [
-                'label' => __('Alignment', 'essential-addons-elementor'),
+                'label' => __('Alignment', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => __('Left', 'essential-addons-elementor'),
+                        'title' => __('Left', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'essential-addons-elementor'),
+                        'title' => __('Center', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-center',
                     ],
                     'right' => [
-                        'title' => __('Right', 'essential-addons-elementor'),
+                        'title' => __('Right', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-right',
                     ],
                 ],
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-fluentform-title' => 'text-align: {{VALUE}};',
-                    '{{WRAPPER}} .eael-fluentform-description' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .eo-fluentform-title' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .eo-fluentform-description' => 'text-align: {{VALUE}};',
                 ],
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -227,7 +228,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'title_heading',
             [
-                'label' => __('Title', 'essential-addons-elementor'),
+                'label' => __('Title', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before',
                 'condition' => [
@@ -239,11 +240,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'form_title_text_color',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-fluentform-title' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-fluentform-title' => 'color: {{VALUE}}',
                 ],
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -255,8 +256,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'form_title_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-fluentform-title',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-fluentform-title',
                 'condition' => [
                     'custom_title_description' => 'yes',
                 ],
@@ -266,7 +267,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'form_title_margin',
             [
-                'label' => __('Margin', 'essential-addons-elementor'),
+                'label' => __('Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'allowed_dimensions' => 'vertical',
@@ -277,7 +278,7 @@ class FluentForm extends Widget_Base
                     'left' => 'auto',
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-fluentform-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-fluentform-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -288,7 +289,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'description_heading',
             [
-                'label' => __('Description', 'essential-addons-elementor'),
+                'label' => __('Description', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before',
                 'condition' => [
@@ -300,11 +301,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'form_description_text_color',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-fluentform-description' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-fluentform-description' => 'color: {{VALUE}}',
                 ],
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -316,9 +317,9 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'form_description_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
+                'label' => __('Typography', 'elementor-osmova-plugin'),
                 'scheme' => Scheme_Typography::TYPOGRAPHY_4,
-                'selector' => '{{WRAPPER}} .eael-fluentform-description',
+                'selector' => '{{WRAPPER}} .eo-fluentform-description',
                 'condition' => [
                     'custom_title_description' => 'yes',
                 ],
@@ -328,7 +329,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'form_description_margin',
             [
-                'label' => __('Margin', 'essential-addons-elementor'),
+                'label' => __('Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'allowed_dimensions' => 'vertical',
@@ -339,7 +340,7 @@ class FluentForm extends Widget_Base
                     'left' => 'auto',
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-fluentform-description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-fluentform-description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
                     'custom_title_description' => 'yes',
@@ -356,18 +357,18 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_container_style',
             [
-                'label' => __('Form Container', 'essential-addons-elementor'),
+                'label' => __('Form Container', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
         $this->add_control(
-            'eael_contact_form_background',
+            'eo_contact_form_background',
             [
-                'label' => esc_html__('Form Background Color', 'essential-addons-elementor'),
+                'label' => esc_html__('Form Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form' => 'background: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form' => 'background: {{VALUE}};',
                 ],
             ]
         );
@@ -375,36 +376,36 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'fluentform_link_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group a' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group a' => 'color: {{VALUE}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'eael_contact_form_alignment',
+            'eo_contact_form_alignment',
             [
-                'label' => esc_html__('Form Alignment', 'essential-addons-elementor'),
+                'label' => esc_html__('Form Alignment', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => true,
                 'options' => [
                     'default' => [
-                        'title' => __('Default', 'essential-addons-elementor'),
+                        'title' => __('Default', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-ban',
                     ],
                     'left' => [
-                        'title' => esc_html__('Left', 'essential-addons-elementor'),
+                        'title' => esc_html__('Left', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-left',
                     ],
                     'center' => [
-                        'title' => esc_html__('Center', 'essential-addons-elementor'),
+                        'title' => esc_html__('Center', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-center',
                     ],
                     'right' => [
-                        'title' => esc_html__('Right', 'essential-addons-elementor'),
+                        'title' => esc_html__('Right', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-right',
                     ],
                 ],
@@ -413,9 +414,9 @@ class FluentForm extends Widget_Base
         );
 
         $this->add_responsive_control(
-            'eael_contact_form_max_width',
+            'eo_contact_form_max_width',
             [
-                'label' => esc_html__('Form Max Width', 'essential-addons-elementor'),
+                'label' => esc_html__('Form Max Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', 'em', '%'],
                 'range' => [
@@ -429,44 +430,44 @@ class FluentForm extends Widget_Base
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form' => 'width: {{SIZE}}{{UNIT}};'
+                    '{{WRAPPER}} .eo-contact-form' => 'width: {{SIZE}}{{UNIT}};'
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'eael_contact_form_margin',
+            'eo_contact_form_margin',
             [
-                'label' => esc_html__('Form Margin', 'essential-addons-elementor'),
+                'label' => esc_html__('Form Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_responsive_control(
-            'eael_contact_form_padding',
+            'eo_contact_form_padding',
             [
-                'label' => esc_html__('Form Padding', 'essential-addons-elementor'),
+                'label' => esc_html__('Form Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
 
         $this->add_control(
-            'eael_contact_form_border_radius',
+            'eo_contact_form_border_radius',
             [
-                'label' => esc_html__('Border Radius', 'essential-addons-elementor'),
+                'label' => esc_html__('Border Radius', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'separator' => 'before',
                 'size_units' => ['px'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -474,16 +475,16 @@ class FluentForm extends Widget_Base
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
-                'name' => 'eael_contact_form_border',
-                'selector' => '{{WRAPPER}} .eael-contact-form',
+                'name' => 'eo_contact_form_border',
+                'selector' => '{{WRAPPER}} .eo-contact-form',
             ]
         );
 
         $this->add_group_control(
             Group_Control_Box_Shadow::get_type(),
             [
-                'name' => 'eael_contact_form_box_shadow',
-                'selector' => '{{WRAPPER}} .eael-contact-form',
+                'name' => 'eo_contact_form_box_shadow',
+                'selector' => '{{WRAPPER}} .eo-contact-form',
             ]
         );
 
@@ -496,7 +497,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_label_style',
             [
-                'label' => __('Labels', 'essential-addons-elementor'),
+                'label' => __('Labels', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -504,10 +505,10 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'text_color_label',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group label' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group label' => 'color: {{VALUE}}',
                 ],
             ]
         );
@@ -516,8 +517,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'typography_label',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group label',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group label',
             ]
         );
 
@@ -530,7 +531,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_fields_style',
             [
-                'label' => __('Input & Textarea', 'essential-addons-elementor'),
+                'label' => __('Input & Textarea', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -538,25 +539,25 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'input_alignment',
             [
-                'label' => __('Alignment', 'essential-addons-elementor'),
+                'label' => __('Alignment', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => __('Left', 'essential-addons-elementor'),
+                        'title' => __('Left', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'essential-addons-elementor'),
+                        'title' => __('Center', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-center',
                     ],
                     'right' => [
-                        'title' => __('Right', 'essential-addons-elementor'),
+                        'title' => __('Right', 'elementor-osmova-plugin'),
                         'icon' => 'fa fa-align-right',
                     ],
                 ],
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'text-align: {{VALUE}};',
                 ],
             ]
         );
@@ -566,18 +567,18 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'tab_fields_normal',
             [
-                'label' => __('Normal', 'essential-addons-elementor'),
+                'label' => __('Normal', 'elementor-osmova-plugin'),
             ]
         );
 
         $this->add_control(
             'field_bg_color',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'background-color: {{VALUE}}',
                 ],
             ]
         );
@@ -585,11 +586,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'field_text_color',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'color: {{VALUE}}',
                 ],
             ]
         );
@@ -598,10 +599,10 @@ class FluentForm extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'field_border',
-                'label' => __('Border', 'essential-addons-elementor'),
+                'label' => __('Border', 'elementor-osmova-plugin'),
                 'placeholder' => '1px',
                 'default' => '1px',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select',
                 'separator' => 'before',
             ]
         );
@@ -609,11 +610,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'field_radius',
             [
-                'label' => __('Border Radius', 'essential-addons-elementor'),
+                'label' => __('Border Radius', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -621,7 +622,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'field_text_indent',
             [
-                'label' => __('Text Indent', 'essential-addons-elementor'),
+                'label' => __('Text Indent', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -637,7 +638,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'text-indent: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'text-indent: {{SIZE}}{{UNIT}}',
                 ],
                 'separator' => 'before',
             ]
@@ -646,7 +647,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'input_width',
             [
-                'label' => __('Input Width', 'essential-addons-elementor'),
+                'label' => __('Input Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -657,7 +658,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'width: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -665,7 +666,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'input_height',
             [
-                'label' => __('Input Height', 'essential-addons-elementor'),
+                'label' => __('Input Height', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -676,7 +677,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'height: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -684,7 +685,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'textarea_width',
             [
-                'label' => __('Textarea Width', 'essential-addons-elementor'),
+                'label' => __('Textarea Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -695,7 +696,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea' => 'width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea' => 'width: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -703,7 +704,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'textarea_height',
             [
-                'label' => __('Textarea Height', 'essential-addons-elementor'),
+                'label' => __('Textarea Height', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -714,7 +715,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea' => 'height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea' => 'height: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -722,11 +723,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'field_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -734,7 +735,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'field_spacing',
             [
-                'label' => __('Spacing', 'essential-addons-elementor'),
+                'label' => __('Spacing', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -745,7 +746,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group' => 'margin-bottom: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group' => 'margin-bottom: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -754,8 +755,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'field_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select',
                 'separator' => 'before',
             ]
         );
@@ -764,7 +765,7 @@ class FluentForm extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'field_box_shadow',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group select',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]), {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group select',
                 'separator' => 'before',
             ]
         );
@@ -774,18 +775,18 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'tab_fields_focus',
             [
-                'label' => __('Focus', 'essential-addons-elementor'),
+                'label' => __('Focus', 'elementor-osmova-plugin'),
             ]
         );
 
         $this->add_control(
             'field_bg_color_focus',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea:focus' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea:focus' => 'background-color: {{VALUE}}',
                 ],
             ]
         );
@@ -794,10 +795,10 @@ class FluentForm extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'focus_input_border',
-                'label' => __('Border', 'essential-addons-elementor'),
+                'label' => __('Border', 'elementor-osmova-plugin'),
                 'placeholder' => '1px',
                 'default' => '1px',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea:focus',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea:focus',
             ]
         );
 
@@ -805,7 +806,7 @@ class FluentForm extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'focus_box_shadow',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea:focus',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]):focus, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea:focus',
                 'separator' => 'before',
             ]
         );
@@ -823,7 +824,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_placeholder_style',
             [
-                'label' => __('Placeholder', 'essential-addons-elementor'),
+                'label' => __('Placeholder', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
                 'condition' => [
                     'placeholder_switch' => 'yes',
@@ -834,10 +835,10 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'text_color_placeholder',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group input::-webkit-input-placeholder, {{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group textarea::-webkit-input-placeholder' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group input::-webkit-input-placeholder, {{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group textarea::-webkit-input-placeholder' => 'color: {{VALUE}}',
                 ],
                 'condition' => [
                     'placeholder_switch' => 'yes',
@@ -854,7 +855,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_radio_checkbox_style',
             [
-                'label' => __('Radio & Checkbox', 'essential-addons-elementor'),
+                'label' => __('Radio & Checkbox', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -862,10 +863,10 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'custom_radio_checkbox',
             [
-                'label' => __('Custom Styles', 'essential-addons-elementor'),
+                'label' => __('Custom Styles', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'essential-addons-elementor'),
-                'label_off' => __('No', 'essential-addons-elementor'),
+                'label_on' => __('Yes', 'elementor-osmova-plugin'),
+                'label_off' => __('No', 'elementor-osmova-plugin'),
                 'return_value' => 'yes',
             ]
         );
@@ -873,7 +874,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'radio_checkbox_size',
             [
-                'label' => __('Size', 'essential-addons-elementor'),
+                'label' => __('Size', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'default' => [
                     'size' => '15',
@@ -888,7 +889,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -901,7 +902,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'radio_checkbox_normal',
             [
-                'label' => __('Normal', 'essential-addons-elementor'),
+                'label' => __('Normal', 'elementor-osmova-plugin'),
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
                 ],
@@ -911,11 +912,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'radio_checkbox_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]' => 'background: {{VALUE}}',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]' => 'background: {{VALUE}}',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -926,7 +927,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'checkbox_border_width',
             [
-                'label' => __('Border Width', 'essential-addons-elementor'),
+                'label' => __('Border Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -937,7 +938,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]' => 'border-width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]' => 'border-width: {{SIZE}}{{UNIT}}',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -948,11 +949,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'checkbox_border_color',
             [
-                'label' => __('Border Color', 'essential-addons-elementor'),
+                'label' => __('Border Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]' => 'border-color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]' => 'border-color: {{VALUE}}',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -963,7 +964,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'checkbox_heading',
             [
-                'label' => __('Checkbox', 'essential-addons-elementor'),
+                'label' => __('Checkbox', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -974,11 +975,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'checkbox_border_radius',
             [
-                'label' => __('Border Radius', 'essential-addons-elementor'),
+                'label' => __('Border Radius', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"]:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"]:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -989,7 +990,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'radio_heading',
             [
-                'label' => __('Radio Buttons', 'essential-addons-elementor'),
+                'label' => __('Radio Buttons', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -1000,11 +1001,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'radio_border_radius',
             [
-                'label' => __('Border Radius', 'essential-addons-elementor'),
+                'label' => __('Border Radius', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"], {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"], {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -1017,7 +1018,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'radio_checkbox_checked',
             [
-                'label' => __('Checked', 'essential-addons-elementor'),
+                'label' => __('Checked', 'elementor-osmova-plugin'),
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
                 ],
@@ -1027,11 +1028,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'radio_checkbox_color_checked',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-custom-radio-checkbox input[type="checkbox"]:checked:before, {{WRAPPER}} .eael-custom-radio-checkbox input[type="radio"]:checked:before' => 'background: {{VALUE}}',
+                    '{{WRAPPER}} .eo-custom-radio-checkbox input[type="checkbox"]:checked:before, {{WRAPPER}} .eo-custom-radio-checkbox input[type="radio"]:checked:before' => 'background: {{VALUE}}',
                 ],
                 'condition' => [
                     'custom_radio_checkbox' => 'yes',
@@ -1052,7 +1053,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_break_style',
             [
-                'label' => __('Section Break Style', 'essential-addons-elementor'),
+                'label' => __('Section Break Style', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1060,7 +1061,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_break_label',
             [
-                'label' => __('Label', 'essential-addons-elementor'),
+                'label' => __('Label', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING
             ]
         );
@@ -1068,11 +1069,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_break_label_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -1081,8 +1082,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'section_break_label_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '.eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break .ff-el-section-title',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '.eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break .ff-el-section-title',
                 'separator' => 'before',
             ]
         );
@@ -1090,11 +1091,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_break_label_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1102,11 +1103,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_break_label_margin',
             [
-                'label' => __('Margin', 'essential-addons-elementor'),
+                'label' => __('Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break .ff-el-section-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1114,7 +1115,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_break_description',
             [
-                'label' => __('Description', 'essential-addons-elementor'),
+                'label' => __('Description', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1123,11 +1124,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_break_description_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break div' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break div' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -1136,8 +1137,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'section_break_description_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break div',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break div',
                 'separator' => 'before',
             ]
         );
@@ -1145,11 +1146,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_break_description_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break div' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break div' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1157,11 +1158,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_break_description_margin',
             [
-                'label' => __('Margin', 'essential-addons-elementor'),
+                'label' => __('Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-section-break div' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-section-break div' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1169,23 +1170,23 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_break_alignment',
             [
-                'label' => __('Alignment', 'essential-addons-elementor'),
+                'label' => __('Alignment', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => __('Left', 'essential-addons-elementor'),
+                        'title' => __('Left', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'essential-addons-elementor'),
+                        'title' => __('Center', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-center',
                     ],
                     'right' => [
-                        'title' => __('Right', 'essential-addons-elementor'),
+                        'title' => __('Right', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-right',
                     ],
                 ],
-                'prefix_class' => 'eael-fluentform-section-break-content-'
+                'prefix_class' => 'eo-fluentform-section-break-content-'
             ]
         );
 
@@ -1198,7 +1199,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_table_grid',
             [
-                'label' => __('Checkbox Grid Style', 'essential-addons-elementor'),
+                'label' => __('Checkbox Grid Style', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1206,7 +1207,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_table_grid_head',
             [
-                'label' => __('Grid Table Head', 'essential-addons-elementor'),
+                'label' => __('Grid Table Head', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1215,11 +1216,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_table_grid_head_color',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table thead th' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table thead th' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -1227,11 +1228,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_table_grid_head_text_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table thead th' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table thead th' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -1240,8 +1241,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'section_table_grid_head_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table thead th',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table thead th',
                 'separator' => 'before',
             ]
         );
@@ -1249,7 +1250,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_table_grid_head_height',
             [
-                'label' => __('Height', 'essential-addons-elementor'),
+                'label' => __('Height', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -1260,7 +1261,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table thead th' => 'height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table thead th' => 'height: {{SIZE}}{{UNIT}}',
                 ]
             ]
         );
@@ -1268,11 +1269,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_table_grid_head_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1280,7 +1281,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'section_table_grid_item',
             [
-                'label' => __('Grid Table Item', 'essential-addons-elementor'),
+                'label' => __('Grid Table Item', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before'
             ]
@@ -1289,11 +1290,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'table_grid_item_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table tbody tr td' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table tbody tr td' => 'color: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -1301,11 +1302,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'table_grid_item_bg_color',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table tbody tr td' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table tbody tr td' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -1313,7 +1314,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'table_grid_item_odd_bg_color',
             [
-                'label' => __('Odd Item Background Color', 'essential-addons-elementor'),
+                'label' => __('Odd Item Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
@@ -1326,15 +1327,15 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'table_grid_item_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table tbody tr td',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table tbody tr td',
             ]
         );
 
         $this->add_responsive_control(
             'section_table_grid_item_height',
             [
-                'label' => __('Height', 'essential-addons-elementor'),
+                'label' => __('Height', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -1345,7 +1346,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table tbody tr td' => 'height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table tbody tr td' => 'height: {{SIZE}}{{UNIT}}',
                 ]
             ]
         );
@@ -1353,11 +1354,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'section_table_grid_item_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-table tbody tr td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-table tbody tr td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1371,7 +1372,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_address_line_style',
             [
-                'label' => __('Address Line Style', 'essential-addons-elementor'),
+                'label' => __('Address Line Style', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1379,7 +1380,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'address_line_label_color',
             [
-                'label' => __('Label Color', 'essential-addons-elementor'),
+                'label' => __('Label Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
@@ -1392,7 +1393,7 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'address_line_label_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
+                'label' => __('Typography', 'elementor-osmova-plugin'),
                 'selector' => '{{WRAPPER}} .fluent-address label',
             ]
         );
@@ -1406,7 +1407,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_submit_button_style',
             [
-                'label' => __('Submit Button', 'essential-addons-elementor'),
+                'label' => __('Submit Button', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1414,24 +1415,24 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'button_align',
             [
-                'label' => __('Alignment', 'essential-addons-elementor'),
+                'label' => __('Alignment', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
-                        'title' => __('Left', 'essential-addons-elementor'),
+                        'title' => __('Left', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'essential-addons-elementor'),
+                        'title' => __('Center', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-center',
                     ],
                     'right' => [
-                        'title' => __('Right', 'essential-addons-elementor'),
+                        'title' => __('Right', 'elementor-osmova-plugin'),
                         'icon' => 'eicon-h-align-right',
                     ],
                 ],
                 'default' => '',
-                'prefix_class' => 'eael-fluentform-form-button-',
+                'prefix_class' => 'eo-fluentform-form-button-',
                 'condition' => [
                     'button_width_type' => 'custom',
                 ],
@@ -1441,21 +1442,21 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'button_width_type',
             [
-                'label' => __('Width', 'essential-addons-elementor'),
+                'label' => __('Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'custom',
                 'options' => [
-                    'full-width' => __('Full Width', 'essential-addons-elementor'),
-                    'custom' => __('Custom', 'essential-addons-elementor'),
+                    'full-width' => __('Full Width', 'elementor-osmova-plugin'),
+                    'custom' => __('Custom', 'elementor-osmova-plugin'),
                 ],
-                'prefix_class' => 'eael-fluentform-form-button-',
+                'prefix_class' => 'eo-fluentform-form-button-',
             ]
         );
 
         $this->add_responsive_control(
             'button_width',
             [
-                'label' => __('Width', 'essential-addons-elementor'),
+                'label' => __('Width', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -1466,7 +1467,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'width: {{SIZE}}{{UNIT}}',
                 ],
                 'condition' => [
                     'button_width_type' => 'custom',
@@ -1479,18 +1480,18 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'tab_button_normal',
             [
-                'label' => __('Normal', 'essential-addons-elementor'),
+                'label' => __('Normal', 'elementor-osmova-plugin'),
             ]
         );
 
         $this->add_control(
             'button_bg_color_normal',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '#409EFF',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'background-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'background-color: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -1498,11 +1499,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'button_text_color_normal',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '#ffffff',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'color: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -1511,21 +1512,21 @@ class FluentForm extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'button_border_normal',
-                'label' => __('Border', 'essential-addons-elementor'),
+                'label' => __('Border', 'elementor-osmova-plugin'),
                 'placeholder' => '1px',
                 'default' => '1px',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit',
             ]
         );
 
         $this->add_control(
             'button_border_radius',
             [
-                'label' => __('Border Radius', 'essential-addons-elementor'),
+                'label' => __('Border Radius', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1533,11 +1534,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'button_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1545,7 +1546,7 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'button_margin',
             [
-                'label' => __('Margin Top', 'essential-addons-elementor'),
+                'label' => __('Margin Top', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::SLIDER,
                 'range' => [
                     'px' => [
@@ -1556,7 +1557,7 @@ class FluentForm extends Widget_Base
                 ],
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'margin-top: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit' => 'margin-top: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -1565,8 +1566,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'button_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit',
                 'separator' => 'before',
             ]
         );
@@ -1575,7 +1576,7 @@ class FluentForm extends Widget_Base
             Group_Control_Box_Shadow::get_type(),
             [
                 'name' => 'button_box_shadow',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit',
                 'separator' => 'before',
             ]
         );
@@ -1585,18 +1586,18 @@ class FluentForm extends Widget_Base
         $this->start_controls_tab(
             'tab_button_hover',
             [
-                'label' => __('Hover', 'essential-addons-elementor'),
+                'label' => __('Hover', 'elementor-osmova-plugin'),
             ]
         );
 
         $this->add_control(
             'button_bg_color_hover',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'background-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'background-color: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -1604,11 +1605,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'button_text_color_hover',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'color: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -1616,11 +1617,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'button_border_color_hover',
             [
-                'label' => __('Border Color', 'essential-addons-elementor'),
+                'label' => __('Border Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'border-color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-el-group .ff-btn-submit:hover' => 'border-color: {{VALUE}}',
                 ],
             ]
         );
@@ -1638,7 +1639,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_success_message_style',
             [
-                'label' => __('Success Message', 'essential-addons-elementor'),
+                'label' => __('Success Message', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1646,10 +1647,10 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'success_message_bg_color',
             [
-                'label' => __('Background Color', 'essential-addons-elementor'),
+                'label' => __('Background Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-message-success' => 'background-color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-message-success' => 'background-color: {{VALUE}}',
                 ],
             ]
         );
@@ -1657,10 +1658,10 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'success_message_text_color',
             [
-                'label' => __('Text Color', 'essential-addons-elementor'),
+                'label' => __('Text Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-message-success' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-message-success' => 'color: {{VALUE}}',
                 ],
             ]
         );
@@ -1669,10 +1670,10 @@ class FluentForm extends Widget_Base
             Group_Control_Border::get_type(),
             [
                 'name' => 'success_message_border',
-                'label' => __('Border', 'essential-addons-elementor'),
+                'label' => __('Border', 'elementor-osmova-plugin'),
                 'placeholder' => '1px',
                 'default' => '1px',
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-message-success',
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-message-success',
             ]
         );
 
@@ -1680,8 +1681,8 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'success_message_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .ff-message-success',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .ff-message-success',
             ]
         );
 
@@ -1694,7 +1695,7 @@ class FluentForm extends Widget_Base
         $this->start_controls_section(
             'section_error_style',
             [
-                'label' => __('Errors', 'essential-addons-elementor'),
+                'label' => __('Errors', 'elementor-osmova-plugin'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -1702,7 +1703,7 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'error_messages_heading',
             [
-                'label' => __('Error Messages', 'essential-addons-elementor'),
+                'label' => __('Error Messages', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::HEADING,
                 'condition' => [
                     'error_messages' => 'show',
@@ -1713,11 +1714,11 @@ class FluentForm extends Widget_Base
         $this->add_control(
             'error_message_text_color',
             [
-                'label' => __('Color', 'essential-addons-elementor'),
+                'label' => __('Color', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .error.text-danger' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .error.text-danger' => 'color: {{VALUE}}',
                 ],
                 'condition' => [
                     'error_messages' => 'show',
@@ -1729,19 +1730,19 @@ class FluentForm extends Widget_Base
             Group_Control_Typography::get_type(),
             [
                 'name' => 'error_message_typography',
-                'label' => __('Typography', 'essential-addons-elementor'),
-                'selector' => '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .error.text-danger',
+                'label' => __('Typography', 'elementor-osmova-plugin'),
+                'selector' => '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .error.text-danger',
             ]
         );
 
         $this->add_responsive_control(
             'error_message_padding',
             [
-                'label' => __('Padding', 'essential-addons-elementor'),
+                'label' => __('Padding', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .error.text-danger' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .error.text-danger' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1749,11 +1750,11 @@ class FluentForm extends Widget_Base
         $this->add_responsive_control(
             'error_message_margin',
             [
-                'label' => __('Margin', 'essential-addons-elementor'),
+                'label' => __('Margin', 'elementor-osmova-plugin'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .eael-contact-form.eael-fluent-form-wrapper .error.text-danger' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .eo-contact-form.eo-fluent-form-wrapper .error.text-danger' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -1771,58 +1772,58 @@ class FluentForm extends Widget_Base
         $settings = $this->get_settings_for_display();
 
         $this->add_render_attribute(
-            'eael_fluentform_wrapper',
+            'eo-fluentform-wrapper',
             [
                 'class' => [
-                    'eael-contact-form',
-                    'eael-fluent-form-wrapper',
+                    'eo-contact-form',
+                    'eo-fluent-form-wrapper',
                     'clearfix'
                 ]
             ]
         );
 
         if ( $settings['placeholder_switch'] != 'yes' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'placeholder-hide' );
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'placeholder-hide' );
         }
 
         if( $settings['labels_switch'] != 'yes' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'fluent-form-labels-hide' );
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'fluent-form-labels-hide' );
         }
 
         if( $settings['error_messages'] == 'hide' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'error-message-hide' );
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'error-message-hide' );
         }
 
         if ( $settings['custom_radio_checkbox'] == 'yes' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'eael-custom-radio-checkbox' );
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'eo-custom-radio-checkbox' );
         }
-        if ( $settings['eael_contact_form_alignment'] == 'left' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'eael-contact-form-align-left' );
+        if ( $settings['eo_contact_form_alignment'] == 'left' ) {
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'eo-contact-form-align-left' );
         }
-        elseif ( $settings['eael_contact_form_alignment'] == 'center' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'eael-contact-form-align-center' );
+        elseif ( $settings['eo_contact_form_alignment'] == 'center' ) {
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'eo-contact-form-align-center' );
         }
-        elseif ( $settings['eael_contact_form_alignment'] == 'right' ) {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'eael-contact-form-align-right' );
+        elseif ( $settings['eo_contact_form_alignment'] == 'right' ) {
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'eo-contact-form-align-right' );
         }
         else {
-            $this->add_render_attribute( 'eael_fluentform_wrapper', 'class', 'eael-contact-form-align-default' );
+            $this->add_render_attribute( 'eo-fluentform-wrapper', 'class', 'eo-contact-form-align-default' );
         }
         
         $shortcode = '[fluentform id="'.$this->get_settings_for_display('form_list').'"]';
 
         ?>
-        <div <?php echo $this->get_render_attribute_string('eael_fluentform_wrapper'); ?>>
+        <div <?php echo $this->get_render_attribute_string('eo-fluentform-wrapper'); ?>>
 
             <?php if ( $settings['custom_title_description'] == 'yes' ) { ?>
-                <div class="eael-fluentform-heading">
+                <div class="eo-fluentform-heading">
                     <?php if ( $settings['form_title_custom'] != '' ) { ?>
-                        <h3 class="eael-contact-form-title eael-fluentform-title">
+                        <h3 class="eo-contact-form-title eo-fluentform-title">
                             <?php echo esc_attr( $settings['form_title_custom'] ); ?>
                         </h3>
                     <?php } ?>
                     <?php if ( $settings['form_description_custom'] != '' ) { ?>
-                        <div class="eael-contact-form-description eael-fluentform-description">
+                        <div class="eo-contact-form-description eo-fluentform-description">
                             <?php echo $this->parse_text_editor( $settings['form_description_custom'] ); ?>
                         </div>
                     <?php } ?>

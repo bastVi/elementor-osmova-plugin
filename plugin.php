@@ -46,7 +46,24 @@ class Plugin {
 	 * @access public
 	 */
 	public function widget_scripts() {
-		wp_register_script( 'elementor-osmova-plugin', plugins_url( '/assets/js/hello-world.js', __FILE__ ), [ 'jquery' ], false, true );
+		wp_register_script( 'elementor-osmova-plugin', plugins_url( '/assets/js/statistics.js', __FILE__ ), [ 'jquery' ], false, true );
+		wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/fluentform/index.min.css', __FILE__ ));
+		wp_register_style( 'elementor-osmova-plugin', plugins_url( '/assets/css/statistics.min.css', __FILE__ ));
+        if( defined('FLUENTFORM') ) {
+            wp_enqueue_style(
+                'fluent-form-styles',
+                WP_PLUGIN_URL . '/fluentform/public/css/fluent-forms-public.css',
+                array(),
+                FLUENTFORM_VERSION
+            );
+
+            wp_enqueue_style(
+                'fluentform-public-default',
+                WP_PLUGIN_URL . '/fluentform/public/css/fluentform-public-default.css',
+                array(),
+                FLUENTFORM_VERSION
+            );
+        }
 	}
 
 	/**
@@ -58,8 +75,9 @@ class Plugin {
 	 * @access private
 	 */
 	private function include_widgets_files() {
-		require_once( __DIR__ . '/widgets/InlineEditing.php' );
-        require_once( __DIR__ . '/widgets/Statistics.php' );
+		require_once( __DIR__ . '/Widgets/FluentForm.php' );
+		require_once( __DIR__ . '/Widgets/InlineEditing.php' );
+        require_once( __DIR__ . '/Widgets/Statistics.php' );
 	}
 
 	/**
@@ -75,6 +93,7 @@ class Plugin {
 		$this->include_widgets_files();
 
 		// Register Widgets
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\FluentForm() );
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\InlineEditing() );
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Statistics() );
 	}
