@@ -1,3 +1,4 @@
+
 <?php
 namespace ElementorOsmovaPlugin;
 
@@ -89,6 +90,7 @@ class Plugin {
 		require_once( __DIR__ . '/Widgets/FluentForm.php' );
 		require_once( __DIR__ . '/Widgets/InlineEditing.php' );
         require_once( __DIR__ . '/Widgets/Statistics.php' );
+        require_once( __DIR__ . '/Widgets/Export.php' );
 	}
 
 	/**
@@ -107,6 +109,7 @@ class Plugin {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\FluentForm() );
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\InlineEditing() );
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Statistics() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new Widgets\Export() );
 	}
 
 	/**
@@ -132,3 +135,4 @@ class Plugin {
 
 // Instantiate Plugin Class
 Plugin::instance();
+
