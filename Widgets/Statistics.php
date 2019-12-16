@@ -267,7 +267,7 @@
             $questions = $this->getSurveyData($form_id);
             ?>
             <div id="survey-results">
-                <?php if(isset($questions[1]) && isset($questions[1]['results'])):?>
+                <?php if(isset($questions[key($questions)]) && isset($questions[key($questions)]['results'])):?>
                 <?php foreach ($questions as $num => $data): ?>
                     <h4><?= $data['label'] ?></h4>
                     <table>
