@@ -273,7 +273,7 @@
                     <table>
                         <thead>
                         <th>Réponses</th>
-                        <th>Nombre d'entées</th>
+                        <th>Nombre d'entrées</th>
                         </thead>
                         <tbody>
                         <?php if(isset($data['results'])): foreach ($data['results'] as $value => $entries): ?>
