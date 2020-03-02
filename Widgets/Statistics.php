@@ -226,6 +226,7 @@
 
         protected function getSurveyQuestions($raw_fields) {
             $survey = array();
+            if(!$raw_fields) return $survey;
             foreach ($raw_fields as $field => $data) {
                 $data_name = $data['attributes']['name'];
                 $is_subfield = $this->isSubfield($data_name, $data);
@@ -238,11 +239,14 @@
         protected function getSurveyData($form_id) {
             $entries = $this->getEntriesData($form_id);
             $survey_fields = $this->getSurveyQuestions($this->getFieldsData($form_id));
+            unset($survey_fields['address']);
             foreach ($entries as $entry => $data) {
-                $isSubfield = $this->isSubfield($data['name'], [], $survey_fields);
-                $question = $data['name'];
-                if($isSubfield) $question = rtrim($data['name'], 'o');
-                $survey_fields[$question]['results'][$data['value']] = $data['submissions'];
+                if($data['name'] !== 'address' && strpos($data['name'], 'q') === 0) {
+                    $isSubfield = $this->isSubfield($data['name'], [], $survey_fields);
+                    $question = $data['name'];
+                    if($isSubfield) $question = rtrim($data['name'], 'o');
+                    $survey_fields[$question]['results'][$data['value']] = $data['submissions'];
+                }
             }
             return $survey_fields;
         }
