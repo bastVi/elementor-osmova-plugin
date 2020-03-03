@@ -240,6 +240,7 @@
             $entries = $this->getEntriesData($form_id);
             $survey_fields = $this->getSurveyQuestions($this->getFieldsData($form_id));
             unset($survey_fields['address']);
+            unset($survey_fields['comments']);
             foreach ($entries as $entry => $data) {
                 if($data['name'] !== 'address' && strpos($data['name'], 'q') === 0) {
                     $isSubfield = $this->isSubfield($data['name'], [], $survey_fields);
